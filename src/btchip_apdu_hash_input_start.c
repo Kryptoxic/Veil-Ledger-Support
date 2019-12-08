@@ -85,7 +85,11 @@ unsigned short btchip_apdu_hash_input_start() {
                 (G_coin_config->kind == COIN_KIND_BITCOIN_CASH ? usingCashAddr
                                                                : 0);
             btchip_context_D.usingOverwinter = 0;
+<<<<<<< HEAD
             if ((G_coin_config->kind == COIN_KIND_ZCASH) || (G_coin_config->kind == COIN_KIND_KOMODO)) {
+=======
+            if ((G_coin_config->kind == COIN_KIND_ZCASH) || (G_coin_config->kind == COIN_KIND_KOMODO) || (G_coin_config->kind == COIN_KIND_ZCLASSIC) || (G_coin_config->kind == COIN_KIND_RESISTANCE)) {
+>>>>>>> upstream/master
                 if (G_io_apdu_buffer[ISO_OFFSET_P2] == P2_NEW_SEGWIT_OVERWINTER) {
                     btchip_context_D.usingOverwinter = ZCASH_USING_OVERWINTER;
                 }

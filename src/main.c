@@ -155,7 +155,11 @@ union {
         // char addressSummary[40]; // beginning of the output address ... end
         // of
 
+<<<<<<< HEAD
         char fullAddress[43]; // the address
+=======
+        char fullAddress[65]; // the address
+>>>>>>> upstream/master
         char fullAmount[20];  // full amount
         char feesAmount[20];  // fees
     } tmp;
@@ -192,6 +196,7 @@ unsigned int io_seproxyhal_touch_settings(const bagl_element_t *e);
 unsigned int io_seproxyhal_touch_exit(const bagl_element_t *e);
 void ui_idle(void);
 
+<<<<<<< HEAD
 #ifdef TARGET_NANOX
 #include "ux.h"
 ux_state_t G_ux;
@@ -199,6 +204,15 @@ bolos_ux_params_t G_ux_params;
 #else // TARGET_NANOX
 ux_state_t ux;
 #endif // TARGET_NANOX
+=======
+#ifdef HAVE_UX_FLOW
+#include "ux.h"
+ux_state_t G_ux;
+bolos_ux_params_t G_ux_params;
+#else // HAVE_UX_FLOW
+ux_state_t ux;
+#endif // HAVE_UX_FLOW
+>>>>>>> upstream/master
 
 // display stepped screens
 unsigned int ux_step;
@@ -293,7 +307,11 @@ unsigned int ui_settings_blue_button(unsigned int button_mask, unsigned int butt
 
 #endif // #if defined(TARGET_BLUE)
 
+<<<<<<< HEAD
 #if defined(TARGET_NANOS)
+=======
+#if defined(TARGET_NANOS) && !defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 
 const ux_menu_entry_t menu_main[];
 const ux_menu_entry_t menu_settings[];
@@ -328,7 +346,11 @@ const ux_menu_entry_t menu_main[] = {
     {NULL, os_sched_exit, 0, &C_nanos_icon_dashboard, "Quit app", NULL, 50, 29},
     UX_MENU_END};
 
+<<<<<<< HEAD
 #endif // #if defined(TARGET_NANOS)
+=======
+#endif // #if defined(TARGET_NANOS) && !defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 
 #if defined(TARGET_BLUE)
 // reuse vars.tmp.addressSummary for each line content
@@ -1200,7 +1222,11 @@ unsigned int io_seproxyhal_touch_display_token_ok(const bagl_element_t *e) {
     return 0; // DO NOT REDRAW THE BUTTON
 }
 
+<<<<<<< HEAD
 #if defined(TARGET_NANOS)
+=======
+#if defined(TARGET_NANOS) && !defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 unsigned int ui_verify_nanos_button(unsigned int button_mask,
                                     unsigned int button_mask_counter) {
     switch (button_mask) {
@@ -1368,7 +1394,11 @@ unsigned int ui_display_token_nanos_button(unsigned int button_mask,
     return 0;
 }
 
+<<<<<<< HEAD
 #endif // #if defined(TARGET_NANOS)
+=======
+#endif // #if defined(TARGET_NANOS) && !defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 
 #if defined(TARGET_BLUE)
 void ui_transaction_blue_init(void) {
@@ -1441,7 +1471,11 @@ void ui_transaction_p2sh_blue_init(void) {
 #endif // #if defined(TARGET_BLUE)
 
 
+<<<<<<< HEAD
 #if defined(TARGET_NANOX)
+=======
+#if defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 
 const char* settings_submenu_getter(unsigned int idx);
 void settings_submenu_selector(unsigned int idx);
@@ -1898,7 +1932,11 @@ UX_FLOW(ux_request_change_path_approval_flow,
   &ux_request_change_path_approval_flow_4_step
 );
 
+<<<<<<< HEAD
 #endif // #if defined(TARGET_NANOX)
+=======
+#endif // #if defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
 
 void ui_idle(void) {
     ux_step_count = 0;
@@ -1906,14 +1944,23 @@ void ui_idle(void) {
 
 #if defined(TARGET_BLUE)
     UX_DISPLAY(ui_idle_blue, ui_idle_blue_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOS)
     UX_MENU_DISPLAY(0, menu_main, NULL);
 #elif defined(TARGET_NANOX)
+=======
+#elif defined(HAVE_UX_FLOW)
+>>>>>>> upstream/master
     // reserve a display stack slot if none yet
     if(G_ux.stack_count == 0) {
         ux_stack_push();
     }
     ux_flow_init(0, ux_idle_flow, NULL);
+<<<<<<< HEAD
+=======
+#elif defined(TARGET_NANOS)
+    UX_MENU_DISPLAY(0, menu_main, NULL);    
+>>>>>>> upstream/master
 #endif // #if TARGET_ID
 }
 
@@ -2051,9 +2098,15 @@ uint8_t prepare_single_output() {
     char tmp[80];
     unsigned int offset = 0;
     unsigned char versionSize;
+<<<<<<< HEAD
     int addressOffset;
     unsigned char address[22];
     unsigned short version;
+=======
+    int addressOffset = 1; // for static analyzer only
+    unsigned char address[22];
+    unsigned short version = 0; // for static analyzer only
+>>>>>>> upstream/master
     unsigned short textSize;
     unsigned char nativeSegwit;
 
@@ -2110,13 +2163,22 @@ uint8_t prepare_single_output() {
                 tmp[textSize] = '\0';
             }
         } else if (G_coin_config->native_segwit_prefix) {
+<<<<<<< HEAD
             textSize = segwit_addr_encode(
+=======
+            segwit_addr_encode(
+>>>>>>> upstream/master
                 tmp, PIC(G_coin_config->native_segwit_prefix), 0,
                 btchip_context_D.currentOutput + addressOffset,
                 btchip_context_D.currentOutput[addressOffset - 1]);
         }
 
+<<<<<<< HEAD
         strcpy(vars.tmp.fullAddress, tmp);
+=======
+        strncpy(vars.tmp.fullAddress, tmp, sizeof(vars.tmp.fullAddress));
+        vars.tmp.fullAddress[sizeof(vars.tmp.fullAddress) - 1] = '\0';
+>>>>>>> upstream/master
     }
 
     // Prepare amount
@@ -2361,7 +2423,11 @@ uint8_t prepare_full_output(uint8_t checkOnly) {
                             tmp[textSize] = '\0';
                         }
                     } else if (G_coin_config->native_segwit_prefix) {
+<<<<<<< HEAD
                         textSize = segwit_addr_encode(
+=======
+                        segwit_addr_encode(
+>>>>>>> upstream/master
                             tmp, PIC(G_coin_config->native_segwit_prefix), 0,
                             btchip_context_D.currentOutput + offset +
                                 OUTPUT_SCRIPT_NATIVE_WITNESS_PROGRAM_OFFSET,
@@ -2371,7 +2437,12 @@ uint8_t prepare_full_output(uint8_t checkOnly) {
                                  1]);
                     }
 
+<<<<<<< HEAD
                     strcpy(vars.tmp.fullAddress, tmp);
+=======
+                    strncpy(vars.tmp.fullAddress, tmp, sizeof(vars.tmp.fullAddress));
+                    vars.tmp.fullAddress[sizeof(vars.tmp.fullAddress) - 1] = '\0';
+>>>>>>> upstream/master
 
                     // Prepare amount
 
@@ -2419,7 +2490,12 @@ uint8_t prepare_full_output(uint8_t checkOnly) {
             offset += 1 + btchip_context_D.currentOutput[offset];
             currentPos++;
         }
+<<<<<<< HEAD
     }
+=======
+    }    
+    btchip_context_D.tmp = NULL;
+>>>>>>> upstream/master
     return 1;
 error:
     return 0;
@@ -2444,13 +2520,22 @@ unsigned int btchip_bagl_confirm_full_output() {
 
 #if defined(TARGET_BLUE)
     ui_transaction_full_blue_init();
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_confirm_full_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     ux_step = 0;
     ux_step_count = 4;
     UX_DISPLAY(ui_verify_nanos, ui_verify_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_confirm_full_flow, NULL);
 #endif // TARGET_NANOX
+=======
+#endif // TARGET_
+>>>>>>> upstream/master
     return 1;
 }
 
@@ -2473,13 +2558,22 @@ unsigned int btchip_bagl_confirm_single_output() {
 
 #if defined(TARGET_BLUE)
     ui_transaction_output_blue_init();
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_confirm_single_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     ux_step = 0;
     ux_step_count = 3;
     UX_DISPLAY(ui_verify_output_nanos, ui_verify_output_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_confirm_single_flow, NULL);
 #endif // TARGET_NANOX 
+=======
+#endif // TARGET_
+>>>>>>> upstream/master
     return 1;
 }
 
@@ -2490,13 +2584,22 @@ unsigned int btchip_bagl_finalize_tx() {
 
 #if defined(TARGET_BLUE)
     ui_transaction_finalize_blue_init();
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_finalize_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     ux_step = 0;
     ux_step_count = 2;
     UX_DISPLAY(ui_finalize_nanos, ui_finalize_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_finalize_flow, NULL);
 #endif // TARGET_NANOX 
+=======
+#endif // TARGET_
+>>>>>>> upstream/master
     return 1;
 }
 
@@ -2507,13 +2610,22 @@ void btchip_bagl_confirm_message_signature() {
 
 #if defined(TARGET_BLUE)
     ui_message_signature_blue_init();
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_sign_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     ux_step = 0;
     ux_step_count = 2;
     UX_DISPLAY(ui_verify_message_signature_nanos, ui_verify_message_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_sign_flow, NULL);
 #endif // TARGET_NANOX 
+=======
+#endif // TARGET_
+>>>>>>> upstream/master
 }
 
 void btchip_bagl_display_public_key(unsigned char* derivation_path) {
@@ -2533,28 +2645,48 @@ void btchip_bagl_display_public_key(unsigned char* derivation_path) {
         UX_DISPLAY(ui_display_address_blue, ui_display_address_blue_prepro);
     }
 
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, is_derivation_path_unusual?ux_display_public_with_warning_flow:ux_display_public_flow, NULL);
+
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     // prepend a white space to the address
     G_io_apdu_buffer[199] = ' ';
     ux_step = is_derivation_path_unusual?0:4;
     ux_step_count = 6;
     UX_DISPLAY(ui_display_address_nanos, ui_display_address_nanos_prepro);
+<<<<<<< HEAD
     
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, is_derivation_path_unusual?ux_display_public_with_warning_flow:ux_display_public_flow, NULL);
 #endif // TARGET_NANOX
+=======
+
+#endif // TARGET_
+    
+>>>>>>> upstream/master
 }
 
 void btchip_bagl_display_token()
 {
  #if defined(TARGET_BLUE)
     UX_DISPLAY(ui_display_token_blue, ui_display_token_blue_prepro);
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_display_token_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     ux_step = 0;
     ux_step_count = 1;
     UX_DISPLAY(ui_display_token_nanos, NULL);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_display_token_flow, NULL);
+=======
+>>>>>>> upstream/master
 #endif // #if TARGET_ID
 }
 
@@ -2562,13 +2694,21 @@ void btchip_bagl_request_pubkey_approval()
 {
  #if defined(TARGET_BLUE)
      UX_DISPLAY(ui_request_pubkey_approval_blue, ui_request_pubkey_approval_blue_prepro);
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_request_pubkey_approval_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     // append and prepend a white space to the address
     ux_step = 0;
     ux_step_count = 1;
     UX_DISPLAY(ui_request_pubkey_approval_nanos, NULL);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_request_pubkey_approval_flow, NULL);
+=======
+>>>>>>> upstream/master
 #endif // #if TARGET_ID
 }
 
@@ -2577,13 +2717,21 @@ void btchip_bagl_request_change_path_approval(unsigned char* change_path)
     bip32_print_path(change_path, vars.tmp_warning.derivation_path, MAX_DERIV_PATH_ASCII_LENGTH);
  #if defined(TARGET_BLUE)
     UX_DISPLAY(ui_request_change_path_approval_blue, ui_request_change_path_approval_blue_prepro);
+<<<<<<< HEAD
+=======
+#elif defined(HAVE_UX_FLOW)
+    ux_flow_init(0, ux_request_change_path_approval_flow, NULL);
+>>>>>>> upstream/master
 #elif defined(TARGET_NANOS)
     // append and prepend a white space to the address
     ux_step = 0;
     ux_step_count = 4;
     UX_DISPLAY(ui_request_change_path_approval_nanos, ui_request_change_path_approval_nanos_prepro);
+<<<<<<< HEAD
 #elif defined(TARGET_NANOX)
     ux_flow_init(0, ux_request_change_path_approval_flow, NULL);
+=======
+>>>>>>> upstream/master
 #endif // #if TARGET_ID
 }
 
